@@ -7,6 +7,8 @@ class Setting(BaseSettings):
     LINE_CHANNEL_ID:str
     ADMIN_USERNAME: str
     ADMIN_PASSWORD: str
+    SUPABASE_ACCESS_TOKEN: str = ""
+    SUPABASE_PROJECT_REF: str = ""
     # STRIPE_SECRET_KEY: str
     # STRIPE_SANDBOX_ACCOUNT_ID: str
     # STRIPE_WEBHOOK_SECRET: str

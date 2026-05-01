@@ -1,0 +1,31 @@
+name: Unpause Supabase
+
+on:
+  schedule:
+    # Run at 00:00 on every Sunday (to keep it active)
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    # Allows manual trigger
+
+jobs:
+  unpause:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install httpx
+
+      - name: Run unpause script
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: python scripts/unpause_supabase.py
