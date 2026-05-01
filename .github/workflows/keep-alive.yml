@@ -1,0 +1,37 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    # Runs every 6 days at 2:00 AM UTC (safer than exactly 7 days)
+    - cron: '0 2 */6 * *'
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install sqlalchemy psycopg
+      
+      - name: Ping Supabase
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          python -c "
+          from sqlalchemy import create_engine, text
+          import os
+          engine = create_engine(os.environ['DATABASE_URL'])
+          with engine.connect() as conn:
+              result = conn.execute(text('SELECT 1;'))
+              print('✅ Database is active:', result.fetchone())
+          "
