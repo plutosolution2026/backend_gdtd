@@ -39,6 +39,11 @@ async def get_user_profile(
         raise HTTPException(status_code=403, detail="Access denied")
 
     user = await get_user_by_line_id(session, line_user_id)
+    if user is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"User with LINE ID {line_user_id} not found"
+        )
     return user
 
 

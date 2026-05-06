@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 class Setting(BaseSettings):
     # DATABASE_URL: str = "postgressql+asyncpg://user:password@host/dbname"
     DATABASE_URL: str
+    FRONTEND_DOMAIN_NAME: str
     LIFF_ID: str
     LINE_CHANNEL_ID:str
     ADMIN_USERNAME: str

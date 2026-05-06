@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-
+from core.config import settings
 from api import ( food_log_api, user_api, spent_naf_api, blood_test_api, patient_api, 
                  food_item_api, admin_api)
 
@@ -18,7 +18,7 @@ app.include_router(admin_api.router, prefix="/api/v0.1")
 origins = [
     "http://localhost:5173",
     "localhost:5173",
-    "https://ckd-web-app.pages.dev"
+    settings.FRONTEND_DOMAIN_NAME,
 ]
 
 app.add_middleware(
